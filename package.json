@@ -1,1 +1,8 @@
-{"name":"pato-mafia-fbi","version":"1.0.0","private":true,"scripts":{"start":"node server.js"},"engines":{"node":">=18"},"dependencies":{"express":"^4.21.2","socket.io":"^4.8.1"}}
+{
+  "name": "pato-mafia-fbi-2",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": { "start": "node server.js", "check": "node --check server.js && node --check public/app.js" },
+  "engines": { "node": ">=18" },
+  "dependencies": { "express": "^4.21.2", "socket.io": "^4.8.1" }
+}
