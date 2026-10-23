@@ -28,6 +28,44 @@ io.on('connection',s=>{
  s.on('advance',(_,cb)=>{const r=requireRoom(s,cb);if(!r)return;if(!isHost(r,s))return err(cb,'Tylko prowadzący.');if(r.phase==='night'){finishNight(r)}else if(r.phase==='debate'){phases(r,'vote');r.notice='⚖️ GŁOSOWANIE: kto jest Szczurem?';broadcast(r)}else if(r.phase==='vote'){finishVote(r)}else if(r.phase==='verdict'){next(r)}else return err(cb,'Nie można teraz przejść dalej.');success(cb)});
  s.on('restart',(_,cb)=>{const r=requireRoom(s,cb);if(!r)return;if(!isHost(r,s))return err(cb,'Tylko prowadzący.');r.phase='lobby';r.chapter=0;r.answers={};r.log=[];r.winner=null;r.players.forEach(p=>{p.role=null;p.alive=true;p.score=0;p.report=''});broadcast(r);success(cb)});
  s.on('close',(_,cb)=>{const r=requireRoom(s,cb);if(!r)return;if(!isHost(r,s))return err(cb,'Tylko prowadzący.');rooms.delete(r.code);io.to(r.code).emit('closed');for(const p of r.players){const sock=io.sockets.sockets.get(p.socketId);if(sock){sock.leave(r.code);sock.data={}}}success(cb)});
+ 
+  s.on('addBot', (_, cb) => {
+  const r = requireRoom(s, cb);
+  if (!r) return;
+  if (!isHost(r, s)) return err(cb, 'Tylko Wódz dodaje boty.');
+  if (r.phase !== 'lobby') return err(cb, 'Gra już trwa.');
+  if (r.players.length >= 10) return err(cb, 'Pokój jest pełny.');
+
+  const names = ['Szczur FBI', 'Agent Klapek', 'Taca 007', 'Diamentowy Janusz', 'Lukasita BOT'];
+  const count = r.players.filter(p => p.bot).length;
+  r.players.push({
+    id: uid(),
+    name: names[count % names.length],
+    token: uid(),
+    socketId: null,
+    online: true,
+    bot: true,
+    role: null,
+    alive: true,
+    score: 0,
+    report: ''
+  });
+
+  success(cb);
+  broadcast(r);
+});
+
+s.on('removeBots', (_, cb) => {
+  const r = requireRoom(s, cb);
+  if (!r) return;
+  if (!isHost(r, s)) return err(cb, 'Tylko Wódz usuwa boty.');
+  if (r.phase !== 'lobby') return err(cb, 'Gra już trwa.');
+
+  r.players = r.players.filter(p => !p.bot);
+  success(cb);
+  broadcast(r);
+});
+
  s.on('disconnect',()=>{const r=rm(s);if(!r)return;const p=pl(r,s);if(p&&p.socketId===s.id){p.online=false;broadcast(r)}});
 });
 setInterval(()=>{for(const [c,r] of rooms)if(Date.now()-r.created>24*3600000)rooms.delete(c)},3600000).unref();server.listen(process.env.PORT||3000,()=>console.log('PATO MAFIA FBI online'));
