@@ -1,1 +1,54 @@
 
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#130d1a">
+<title>PATO MAFIA — Tajne Akta FBI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top,#502447,#170d23 70%);color:#fff;font:16px system-ui}
+.wrap{max-width:620px;margin:auto;padding:20px 16px 70px}
+header{text-align:center;padding:20px 5px}
+h1{color:#ffdb80;font-size:38px;text-align:center;margin:8px 0}
+h2{color:#ffdb80;font-size:24px}
+h3{font-size:20px}
+p{line-height:1.55}
+.sub{text-align:center;color:#eebbd8;font-weight:bold;letter-spacing:2px;font-size:12px}
+.card{background:#2a183b;border:1px solid #79558f;border-radius:20px;margin:16px 0;padding:20px}
+.gold{border:2px solid #e5b454}
+button{width:100%;border:0;border-radius:13px;background:linear-gradient(100deg,#ffdd82,#f5a45f);color:#27142f;padding:15px;margin:8px 0;font-size:16px;font-weight:800;min-height:50px}
+button.secondary{background:#603e7a;color:white}
+button.danger{background:#902f50;color:white}
+input,textarea{width:100%;padding:14px;margin:9px 0;background:#160e25;border:1px solid #a27abe;color:white;border-radius:12px;font-size:17px}
+textarea{min-height:110px}
+.row{display:flex;gap:9px}
+.row button{flex:1}
+.player,.score{display:flex;justify-content:space-between;gap:10px;padding:12px;background:#452b56;border-radius:12px;margin:8px 0}
+.pill{display:inline-block;border:1px solid #ffdb80;color:#ffdb80;border-radius:25px;padding:7px 12px}
+.big{font-size:22px;font-weight:bold}
+.hint,.muted,small{color:#cdbed7}
+.notice,#toast{background:#673550;border-radius:12px;padding:12px;margin:12px 0}
+#toast:empty{display:none}
+.log{background:#412b50;padding:10px;border-radius:10px}
+.center{text-align:center}
+</style>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/app.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div style="font-size:45px">🐀🕵️💎</div>
+<div class="sub">ŚCIŚLE TAJNE • PATO FAMILY</div>
+</header>
+<div id="toast"></div>
+<main id="app">
+<div class="card center">
+🔍 Otwieramy tajne akta FBI...
+</div>
+</main>
+</div>
+</body>
+</html>
